@@ -1,0 +1,22 @@
+   Γû▓ Next.js 16.0.10 (webpack)
+
+   Creating an optimized production build ...
+ Γ£ô (pwa) Compiling for server...
+ Γ£ô (pwa) Compiling for server...
+ Γ£ô (pwa) Compiling for client (static)...
+ Γùï (pwa) Service worker: C:\Users\rexco\Downloads\omnichat-ui\public\sw.js
+ Γùï (pwa)   URL: /sw.js
+ Γùï (pwa)   Scope: /
+Failed to compile.
+
+./node_modules/pdfjs-dist/build/pdf.js
+Module not found: Can't resolve 'canvas'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./hooks/use-file-upload.ts
+./app/(main)/page.tsx
+
+
+> Build failed because of webpack errors

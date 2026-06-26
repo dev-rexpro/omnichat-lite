@@ -1,0 +1,170 @@
+{
+    "google": {
+        "showThinking": true,
+        "showTools": true,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": true
+    },
+    "openai": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "anthropic": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "mistral": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "deepseek": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "qwen": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "groq": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "open-router": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "hugging-face": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "cohere": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "perplexity": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "together": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "nvidia": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "ollama": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "lm-studio": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "llama-cpp": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "vllm": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "azure": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "aws": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "custom": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    },
+    "default": {
+        "showThinking": false,
+        "showTools": false,
+        "showAdvancedSettings": true,
+        "showSystemInstruction": true,
+        "showTemperature": true,
+        "showMediaResolution": false
+    }
+}

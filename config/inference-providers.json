@@ -1,0 +1,122 @@
+{
+  "llama-cpp": {
+    "baseUrl": "http://localhost:8080",
+    "name": "Llama.cpp",
+    "allowCustomBaseUrl": true,
+    "isKeyRequired": false
+  },
+  "lm-studio": {
+    "baseUrl": "http://localhost:1234",
+    "name": "LM Studio",
+    "allowCustomBaseUrl": true,
+    "isKeyRequired": false
+  },
+  "ollama": {
+    "baseUrl": "http://localhost:11434",
+    "name": "Ollama",
+    "allowCustomBaseUrl": true,
+    "isKeyRequired": false
+  },
+  "vllm": {
+    "baseUrl": "http://localhost:8000",
+    "name": "vLLM",
+    "allowCustomBaseUrl": true,
+    "isKeyRequired": false
+  },
+  "openai": {
+    "baseUrl": "https://api.openai.com",
+    "name": "OpenAI",
+    "allowCustomBaseUrl": false,
+    "isKeyRequired": true
+  },
+  "anthropic": {
+    "baseUrl": "https://api.anthropic.com",
+    "name": "Anthropic",
+    "allowCustomBaseUrl": false,
+    "isKeyRequired": true
+  },
+  "mistral": {
+    "baseUrl": "https://api.mistral.ai",
+    "name": "Mistral",
+    "allowCustomBaseUrl": false,
+    "isKeyRequired": true
+  },
+  "google": {
+    "baseUrl": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "name": "Google",
+    "allowCustomBaseUrl": false,
+    "isKeyRequired": true
+  },
+  "deepseek": {
+    "baseUrl": "https://api.deepseek.com",
+    "name": "DeepSeek",
+    "allowCustomBaseUrl": false,
+    "isKeyRequired": true
+  },
+  "qwen": {
+    "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode",
+    "name": "Qwen",
+    "allowCustomBaseUrl": false,
+    "isKeyRequired": true
+  },
+  "groq": {
+    "baseUrl": "https://api.groq.com/openai",
+    "name": "Groq",
+    "allowCustomBaseUrl": false,
+    "isKeyRequired": true
+  },
+  "open-router": {
+    "baseUrl": "https://openrouter.ai/api",
+    "name": "OpenRouter",
+    "allowCustomBaseUrl": false,
+    "isKeyRequired": true
+  },
+  "hugging-face": {
+    "baseUrl": "https://router.huggingface.co",
+    "name": "Hugging Face",
+    "allowCustomBaseUrl": false,
+    "isKeyRequired": true
+  },
+  "cohere": {
+    "baseUrl": "https://api.cohere.ai",
+    "name": "Cohere",
+    "allowCustomBaseUrl": false,
+    "isKeyRequired": true
+  },
+  "perplexity": {
+    "baseUrl": "https://api.perplexity.ai",
+    "name": "Perplexity",
+    "allowCustomBaseUrl": false,
+    "isKeyRequired": true
+  },
+  "together": {
+    "baseUrl": "https://api.together.xyz",
+    "name": "Together AI",
+    "allowCustomBaseUrl": false,
+    "isKeyRequired": true
+  },
+  "azure": {
+    "baseUrl": "https://<your-resource-name>.openai.azure.com",
+    "name": "Azure AI",
+    "allowCustomBaseUrl": true,
+    "isKeyRequired": true
+  },
+  "aws": {
+    "baseUrl": "https://<your-resource-name>.amazonaws.com/openai",
+    "name": "AWS Bedrock",
+    "allowCustomBaseUrl": true,
+    "isKeyRequired": true
+  },
+  "nvidia": {
+    "baseUrl": "https://integrate.api.nvidia.com",
+    "name": "Nvidia NIM",
+    "allowCustomBaseUrl": false,
+    "isKeyRequired": true
+  },
+  "custom": {
+    "baseUrl": "https://api.custom.com",
+    "name": "OpenAI Compatible",
+    "allowCustomBaseUrl": true,
+    "isKeyRequired": false
+  }
+}
