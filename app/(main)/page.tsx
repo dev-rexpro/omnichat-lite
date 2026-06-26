@@ -23,7 +23,7 @@ const extractHtmlCode = (markdown: string): string | null => {
 
 export default function ChatPage() {
   // Chat logic state
-  const { messages, addMessage, updateMessage, deleteMessage } = useChat()
+  const { messages, addMessage, updateMessage, deleteMessage, branchFromMessage, currentChatId } = useChat()
   const { settings } = useSettings()
   const { runCode } = useCodeRunner()
   const [userInput, setUserInput] = useState("")
@@ -399,6 +399,11 @@ export default function ChatPage() {
     await updateMessage(id, { content })
   }
 
+  const onBranch = async (id: number) => {
+    if (!currentChatId) return
+    await branchFromMessage(currentChatId, id)
+  }
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>, incomingAttachments?: any[]) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault()
@@ -420,6 +425,7 @@ export default function ChatPage() {
       handleKeyDown={handleKeyDown}
       onRegenerate={onRegenerate}
       onEdit={onEdit}
+      onBranch={onBranch}
       onSendFunctionResponse={handleFunctionResponse}
     />
   )

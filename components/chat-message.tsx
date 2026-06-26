@@ -517,6 +517,15 @@ export const ChatMessage = memo(function ChatMessage({
 
                     <Tooltip>
                         <TooltipTrigger asChild>
+                            <Button variant="ghost" size="icon" className="w-7 h-7 hover:bg-muted" onClick={() => onBranch?.(message.id!)}>
+                                <GitBranch className="w-3.5 h-3.5 text-muted-foreground/70" />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side="top">Branch from here</TooltipContent>
+                    </Tooltip>
+
+                    <Tooltip>
+                        <TooltipTrigger asChild>
                             <Button variant="ghost" size="icon" className="w-7 h-7 hover:bg-destructive/10 hover:text-destructive" onClick={() => onDelete?.(message.id!)}>
                                 <Trash2 className="w-3.5 h-3.5 text-muted-foreground/70" />
                             </Button>
