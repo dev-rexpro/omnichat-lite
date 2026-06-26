@@ -52,6 +52,7 @@ interface ChatAreaProps {
   handleKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>, attachments?: Array<{ name: string, type: string, data: string }>) => void
   onRegenerate: () => void
   onEdit: (id: number, content: string) => void
+  onBranch: (id: number) => void
   onSendFunctionResponse: (name: string, content: string) => void
 }
 
@@ -66,6 +67,7 @@ export function ChatArea({
   handleKeyDown,
   onRegenerate,
   onEdit,
+  onBranch,
   onSendFunctionResponse
 }: ChatAreaProps) {
   const { messages, deleteMessage } = useChat();
@@ -212,6 +214,7 @@ export function ChatArea({
                     onDelete={deleteMessage}
                     onRegenerate={onRegenerate}
                     onEdit={onEdit}
+                    onBranch={onBranch}
                     onSendFunctionResponse={onSendFunctionResponse}
                   />
                 )

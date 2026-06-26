@@ -15,7 +15,8 @@ import {
     Atom,
     Brain,
     FileIcon,
-    Download
+    Download,
+    GitBranch
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
@@ -47,10 +48,19 @@ const GEMINI_MODELS = [
   { id: "gemini-2.5-flash-image", name: "Nano Banana (Gemini 2.5 Flash Image)" },
 ]
 
-const REASONING_MODELS: string[] = []
+const REASONING_MODELS: string[] = [
+  "deepseek-r1",
+  "deepseek-r1-distill",
+  "qwen3",
+  "qwen2.5",
+  "llama-4-maverick",
+  "gpt-oss",
+]
 
 function isReasoningModel(modelId?: string): boolean {
-  return false
+  if (!modelId) return false
+  const id = modelId.toLowerCase()
+  return REASONING_MODELS.some(m => id.includes(m))
 }
 
 function getModelName(modelId?: string) {
@@ -63,6 +73,7 @@ interface ChatMessageProps {
     onDelete?: (id: number) => void
     onRegenerate?: () => void
     onEdit?: (id: number, content: string) => void
+    onBranch?: (id: number) => void
     isProcessing?: boolean
     onSendFunctionResponse?: (name: string, content: string) => void
 }
@@ -141,7 +152,7 @@ const ThinkingSection = memo(function ThinkingSection({ content, isThinking }: {
                                 <Lightbulb className="w-3.5 h-3.5 text-foreground" />
                             )}
                             <span key={fadeKey} className="text-[12px] font-medium text-foreground/80" style={{ animation: 'fadeIn 0.5s ease-in-out' }}>
-                                {isThinking ? THINKING_STEPS[stepIndex] : "Reasoning Chain"}
+                                {isThinking ? THINKING_STEPS[stepIndex] : "Chain of Thought"}
                             </span>
                         </div>
                         <div className={cn(
@@ -168,11 +179,15 @@ export const ChatMessage = memo(function ChatMessage({
     onDelete,
     onRegenerate,
     onEdit,
+    onBranch,
     isProcessing,
     onSendFunctionResponse
 }: ChatMessageProps) {
     const { settings } = useSettings()
     const [copied, setCopied] = useState(false)
+    const [isEditing, setIsEditing] = useState(false)
+    const [editText, setEditText] = useState("")
+    const editTextareaRef = useRef<HTMLTextAreaElement>(null)
     const isAssistant = message.role === "assistant"
     const isUser = message.role === "user"
     const hasFunctionCalls = message.functionCalls && message.functionCalls.length > 0
@@ -223,6 +238,36 @@ export const ChatMessage = memo(function ChatMessage({
             stop()
         } else {
             play()
+        }
+    }
+
+    useEffect(() => {
+        if (isEditing && editTextareaRef.current) {
+            editTextareaRef.current.focus()
+            editTextareaRef.current.select()
+        }
+    }, [isEditing])
+
+    const handleEditClick = () => {
+        setEditText(contentText)
+        setIsEditing(true)
+    }
+
+    const handleEditSave = () => {
+        if (onEdit && editText.trim() !== contentText) {
+            onEdit(message.id!, editText.trim())
+        }
+        setIsEditing(false)
+        setEditText("")
+    }
+
+    const handleEditKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === "Escape") {
+            setIsEditing(false)
+            setEditText("")
+        } else if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault()
+            handleEditSave()
         }
     }
 
@@ -325,7 +370,46 @@ export const ChatMessage = memo(function ChatMessage({
                         "text-[15px] leading-relaxed select-text min-h-[1.5em]",
                         !contentText && isAssistant && isProcessing && "py-2 px-4"
                     )}>
-                        {contentText.trim() ? (
+                        {isEditing ? (
+                            <div className="flex flex-col gap-2">
+                                <textarea
+                                    ref={editTextareaRef}
+                                    value={editText}
+                                    onChange={(e) => setEditText(e.target.value)}
+                                    onKeyDown={handleEditKeyDown}
+                                    onBlur={handleEditSave}
+                                    className={cn(
+                                        "w-full resize-none border rounded-md px-3 py-2 text-[15px] leading-relaxed",
+                                        "bg-background border-input focus:outline-none focus:ring-2 focus:ring-primary/30",
+                                        isUser ? "text-secondary-foreground" : "text-foreground"
+                                    )}
+                                    rows={Math.max(2, contentText.split('\n').length)}
+                                />
+                                <div className="flex items-center justify-end gap-2">
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-7 text-xs text-muted-foreground hover:text-foreground"
+                                        onMouseDown={(e) => e.preventDefault()}
+                                        onClick={() => {
+                                            setIsEditing(false)
+                                            setEditText("")
+                                        }}
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        variant="default"
+                                        size="sm"
+                                        className="h-7 text-xs px-3"
+                                        onMouseDown={(e) => e.preventDefault()}
+                                        onClick={handleEditSave}
+                                    >
+                                        Send
+                                    </Button>
+                                </div>
+                            </div>
+                        ) : contentText.trim() ? (
                             (isUser ? settings.displayUserMessagesRaw : settings.displayModelMessagesRaw) ? (
                                 <pre className="whitespace-pre-wrap font-sans text-[14px]">{contentText}</pre>
                             ) : (
@@ -415,11 +499,20 @@ export const ChatMessage = memo(function ChatMessage({
 
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button variant="ghost" size="icon" className="w-7 h-7 hover:bg-muted" onClick={() => onEdit?.(message.id!, contentText)}>
+                            <Button variant="ghost" size="icon" className="w-7 h-7 hover:bg-muted" onClick={handleEditClick}>
                                 <Pencil className="w-3.5 h-3.5 text-muted-foreground/70" />
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent side="top">Edit</TooltipContent>
+                    </Tooltip>
+
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="ghost" size="icon" className="w-7 h-7 hover:bg-muted" onClick={() => onBranch?.(message.id!)}>
+                                <GitBranch className="w-3.5 h-3.5 text-muted-foreground/70" />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side="top">Branch from here</TooltipContent>
                     </Tooltip>
 
                     <Tooltip>
