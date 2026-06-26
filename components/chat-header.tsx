@@ -203,10 +203,10 @@ export function ChatHeader({
 
   return (
     <>
-      <header className="h-14 flex flex-shrink-0 items-center justify-between px-3">
-        <div className="flex items-center gap-1 text-foreground transition-all duration-300 min-w-0">
+      <header className="h-14 flex flex-shrink-0 items-center justify-between px-3 md:justify-between justify-center">
+        <div className="flex items-center gap-1 text-foreground transition-all duration-300 min-w-0 md:relative absolute left-3 z-10">
           {/* Mobile: sidebar toggle only, Desktop: title + rename */}
-          <div className="flex items-center gap-2 min-w-0 overflow-hidden md:hidden">
+          <div className="flex items-center gap-2 min-w-0 overflow-hidden">
             <div
               onClick={() => toggleSidebar("left")}
               className="relative w-8 h-8 flex-shrink-0 cursor-pointer group"
@@ -232,21 +232,20 @@ export function ChatHeader({
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-1 md:flex-none min-w-0 max-w-[280px] md:max-w-none">
           {/* Conditional Rendering: Drawer for Mobile, Popover for Desktop */}
           {isMobile ? (
             <Drawer open={isModelDropdownOpen} onOpenChange={setIsModelDropdownOpen}>
               <DrawerTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="h-9 w-[200px] px-3 justify-between text-sm shadow-sm"
+                 <Button
+                   variant="outline"
+                   className="h-9 flex-1 min-w-0 px-3 justify-between text-sm shadow-sm"
                 >
                   <span className="font-medium truncate">{selectedModelName}</span>
                   <ChevronDown className="w-3.5 h-3.5 text-muted-foreground opacity-50" />
                 </Button>
               </DrawerTrigger>
               <DrawerContent>
-                {/* Visually hidden title for screen reader accessibility */}
                 <DrawerTitle className="sr-only">Select a Model</DrawerTitle>
                 <div className="p-4">
                   <ModelList setSelectedModel={handleModelSelect} setOpen={setIsModelDropdownOpen} isImagesToolActive={settings.tools.images} selectedProvider={settings.provider} fetchedModels={settings.fetchedModels} />
@@ -271,16 +270,30 @@ export function ChatHeader({
               </PopoverContent>
             </Popover>
           )}
+        </div>
 
-              <div
-                onClick={() => toggleSidebar("right")}
-                className="relative w-8 h-8 flex-shrink-0 cursor-pointer group"
-              >
-                <div className="absolute inset-0 bg-muted rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {isRightOpen ? <PanelRightClose className="w-5 h-5 text-muted-foreground" /> : <PanelRightOpen className="w-5 h-5 text-muted-foreground" />}
-                </div>
-              </div>
+        <div className="hidden md:flex items-center gap-2 flex-shrink-0">
+          <div
+            onClick={() => toggleSidebar("right")}
+            className="relative w-8 h-8 flex-shrink-0 cursor-pointer group"
+          >
+            <div className="absolute inset-0 bg-muted rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              {isRightOpen ? <PanelRightClose className="w-5 h-5 text-muted-foreground" /> : <PanelRightOpen className="w-5 h-5 text-muted-foreground" />}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex md:hidden items-center gap-2 flex-shrink-0 absolute right-3 z-10">
+          <div
+            onClick={() => toggleSidebar("right")}
+            className="relative w-8 h-8 flex-shrink-0 cursor-pointer group"
+          >
+            <div className="absolute inset-0 bg-muted rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              {isRightOpen ? <PanelRightClose className="w-5 h-5 text-muted-foreground" /> : <PanelRightOpen className="w-5 h-5 text-muted-foreground" />}
+            </div>
+          </div>
         </div>
       </header>
 

@@ -6,9 +6,15 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { db } from "@/lib/db"
 import {
-  Settings, Monitor, Mic, MessageSquare, FlaskConical, Database, SlidersHorizontal
+  Settings, Monitor, Mic, MessageSquare, FlaskConical, Database, SlidersHorizontal, ChevronDown
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 import providersConfig from "@/config/inference-providers.json"
 import { useSettings } from "@/hooks/use-settings"
@@ -205,6 +211,18 @@ export default function SettingsPage() {
 
   const voices = ["Microsoft David - English (United States)", "Microsoft Mark - English (United States)", "Microsoft Zira - English (United States)"];
 
+  const tabs = [
+    { id: "general", label: "General", icon: Settings },
+    { id: "ui", label: "UI", icon: Monitor },
+    { id: "voice", label: "Voice", icon: Mic },
+    { id: "conversations", label: "Conversations", icon: MessageSquare },
+    { id: "data", label: "Data", icon: Database },
+    { id: "advanced", label: "Advanced", icon: SlidersHorizontal },
+    { id: "experimental", label: "Experimental", icon: FlaskConical },
+  ];
+
+  const currentTab = tabs.find(t => t.id === settingsTab);
+
   const renderPanel = () => {
     switch (settingsTab) {
       case "general":
@@ -249,18 +267,32 @@ export default function SettingsPage() {
 
   return (
     <div className="flex-1 bg-background border border-border rounded-xl shadow-sm overflow-hidden flex h-full">
-      <div className="w-52 border-r border-border bg-background flex-shrink-0 flex flex-col p-2 space-y-1">
-        <Button variant={settingsTab === "general" ? "secondary" : "ghost"} size="sm" onClick={() => setSettingsTab("general")} className="w-full justify-start gap-2"><Settings className="w-4 h-4" />General</Button>
-        <Button variant={settingsTab === "ui" ? "secondary" : "ghost"} size="sm" onClick={() => setSettingsTab("ui")} className="w-full justify-start gap-2"><Monitor className="w-4 h-4" />UI</Button>
-        <Button variant={settingsTab === "voice" ? "secondary" : "ghost"} size="sm" onClick={() => setSettingsTab("voice")} className="w-full justify-start gap-2"><Mic className="w-4 h-4" />Voice</Button>
-        <Button variant={settingsTab === "conversations" ? "secondary" : "ghost"} size="sm" onClick={() => setSettingsTab("conversations")} className="w-full justify-start gap-2"><MessageSquare className="w-4 h-4" />Conversations</Button>
-        <Button variant={settingsTab === "data" ? "secondary" : "ghost"} size="sm" onClick={() => setSettingsTab("data")} className="w-full justify-start gap-2"><Database className="w-4 h-4" />Data</Button>
-        <Button variant={settingsTab === "advanced" ? "secondary" : "ghost"} size="sm" onClick={() => setSettingsTab("advanced")} className="w-full justify-start gap-2"><SlidersHorizontal className="w-4 h-4" />Advanced</Button>
-        <Button variant={settingsTab === "experimental" ? "secondary" : "ghost"} size="sm" onClick={() => setSettingsTab("experimental")} className="w-full justify-start gap-2"><FlaskConical className="w-4 h-4" />Experimental</Button>
+      <div className="hidden md:flex w-52 border-r border-border bg-background flex-shrink-0 flex-col p-2 space-y-1">
+        {tabs.map(tab => (
+          <Button key={tab.id} variant={settingsTab === tab.id ? "secondary" : "ghost"} size="sm" onClick={() => setSettingsTab(tab.id)} className="w-full justify-start gap-2"><tab.icon className="w-4 h-4" />{tab.label}</Button>
+        ))}
       </div>
 
       <div className="flex-1 flex flex-col min-w-0">
         <div className="flex-1 overflow-y-auto p-6"><div className="max-w-xl">
+          <div className="md:hidden mb-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="h-9 w-full justify-between">
+                  <span className="flex items-center gap-2">{currentTab && <currentTab.icon className="w-4 h-4" />}{currentTab?.label}</span>
+                  <ChevronDown className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)]" align="start">
+                {tabs.map(tab => (
+                  <DropdownMenuItem key={tab.id} onClick={() => setSettingsTab(tab.id)} className={cn(settingsTab === tab.id && "bg-accent")}>
+                    <tab.icon className="w-4 h-4 mr-2" />
+                    {tab.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
           {renderPanel()}
         </div></div>
         <div className="p-3 border-t border-border bg-background flex items-center gap-2">
